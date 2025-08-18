@@ -80,7 +80,7 @@ CREATE TABLE your_car_your_way.Assistance (
 CREATE TABLE your_car_your_way.Message (
     id CHAR(36) PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
-    message TEXT NOT NULL,
+    content TEXT NOT NULL,
     status ENUM('SENT', 'READ', 'ARCHIVED') NOT NULL,
     createdAt DATETIME NOT NULL,
     user_id CHAR(36) NOT NULL,
