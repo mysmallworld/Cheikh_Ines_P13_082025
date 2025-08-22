@@ -1,0 +1,67 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  max-width: 600px;
+  margin: 20px auto;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.role-banner {
+  background: #f1f1f1;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.messages {
+  flex: 1;
+  padding: 10px;
+  overflow-y: auto;
+  background: #fafafa;
+}
+
+.message-client,
+.message-agent {
+  display: flex;
+  margin: 5px 0;
+}
+
+.message-client {
+  justify-content: flex-start;
+}
+
+.message-agent {
+  justify-content: flex-end;
+}
+
+.bubble {
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.message-client .bubble {
+  background: #e1f5fe;
+  text-align: left;
+}
+
+.message-agent .bubble {
+  background: #c8e6c9;
+  text-align: right;
+}
+
+.sender {
+  font-size: 0.8rem;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.input-area {
+  border-top: 1px solid #ddd;
+  padding: 10px;
+  background: #fff;
+}

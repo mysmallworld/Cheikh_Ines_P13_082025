@@ -9,13 +9,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class SocketService {
 
-  private stompClient: Client;
-  private messageSubject = new Subject<any>();
+  private readonly stompClient: Client;
+  private readonly messageSubject = new Subject<any>();
 
   messages$ = this.messageSubject.asObservable();
-  private apiUrl = 'http://localhost:3001/api/chat';
+  private readonly apiUrl = 'http://localhost:3001/api/chat';
 
-  constructor(private http: HttpClient) {
+  constructor(private readonly http: HttpClient) {
     this.stompClient = new Client({
       brokerURL: 'ws://localhost:3001/ws',
       webSocketFactory: () => new SockJS('http://localhost:3001/ws'),
@@ -23,7 +23,7 @@ export class SocketService {
     });
 
     this.stompClient.onConnect = () => {
-      console.log('✅ Connected to WebSocket');
+      console.log('Connected to WebSocket');
       this.stompClient.subscribe('/topic/messages', (message: IMessage) => {
         this.messageSubject.next(JSON.parse(message.body));
       });
@@ -32,12 +32,15 @@ export class SocketService {
     this.stompClient.activate();
   }
 
-  sendMessage(sender: string, content: string) {
+  sendMessage(sender: string, content: string, role: string, title: string) {
     const chatMessage = {
-      type: 'CHAT',
-      sender: sender,
-      content: content
+      titleDto: title,
+      contentDto: content,
+      usernameDto: sender,
+      userRoleDto: role,
+      status: 'SENT'
     };
+
     this.stompClient.publish({ destination: '/app/sendMessage', body: JSON.stringify(chatMessage) });
   }
 

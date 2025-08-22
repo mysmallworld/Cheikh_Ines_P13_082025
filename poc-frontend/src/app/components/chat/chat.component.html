@@ -1,1 +1,62 @@
-<p>chat works!</p>
+<div *ngIf="!roleChosen" class="roles text-center mt-4">
+  <h3>Choisissez votre rôle :</h3>
+  <button class="btn btn-primary m-2" (click)="chooseRole('client')">Client</button>
+  <button class="btn btn-success m-2" (click)="chooseRole('agent')">Agent</button>
+</div>
+
+<div *ngIf="roleChosen && !userValidated" class="username-form text-center mt-4">
+  <h4>Entrez votre nom d’utilisateur :</h4>
+  <input type="text" [(ngModel)]="userName" class="form-control w-50 mx-auto mt-2"
+         placeholder="ex: John Doe">
+  <button class="btn btn-dark mt-3" (click)="validateUser()">Valider</button>
+
+  <div *ngIf="validationError" class="alert alert-danger mt-2">
+    {{ validationError }}
+  </div>
+</div>
+
+<div *ngIf="roleChosen && userValidated && sender === 'agent' && !selectedTicket" class="tickets-list container mt-4">
+  <h4>Tickets à traiter</h4>
+  <ul class="list-group">
+    <li *ngFor="let ticket of tickets" 
+        class="list-group-item list-group-item-action"
+        (click)="openTicket(ticket)">
+      <div class="d-flex justify-content-between">
+        <span>{{ ticket.title }}</span>
+        <small *ngIf="ticket.lastMessageAt">{{ ticket.lastMessageAt | date:'short' }}</small>
+      </div>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="roleChosen && userValidated && (sender === 'client' || selectedTicket)" class="chat-container">
+
+  <div class="role-banner">
+    <span *ngIf="sender === 'client'">
+      Connecté en tant que <strong>{{ userName }}</strong> (client)
+    </span>
+    <span *ngIf="sender === 'agent' && selectedTicket">
+      Connecté en tant que<strong>{{ userName }}</strong> (agent)
+      - Conversation avec <strong>{{ selectedTicket.title.replace('Chat:', '') }}</strong>
+    </span>
+  </div>
+
+  <div class="messages" #messagesContainer>
+    <div *ngFor="let message of messages"
+         [ngClass]="{'message-client': message.role === 'CLIENT',
+                     'message-agent': message.role === 'AGENT'}">
+      <div class="bubble">
+        <span class="sender">{{ message.sender }}</span>
+        <p class="content">{{ message.content }}</p>
+      </div>
+    </div>
+  </div>
+
+  <form (ngSubmit)="sendMessage()" class="input-area d-flex">
+    <input type="text" class="form-control me-2"
+           [(ngModel)]="newMessage"
+           name="messageInput"
+           placeholder="Tapez votre message...">
+    <button class="btn btn-primary" type="submit" [disabled]="!newMessage.trim()">Envoyer</button>
+  </form>
+</div>
