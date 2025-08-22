@@ -4,6 +4,5 @@ export interface ChatMessage {
   content: string;
   createdAt?: string;
   role?: string;
-  ticketId?: number;
   title: string;
 }

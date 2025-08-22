@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewChecked, ViewChild, ElementRef } from '@angular/core';
 import { SocketService } from '../../core/services/socket.service';
-import { ChatMessage } from 'src/app/core/models/ChatMessage';
-import { Ticket } from 'src/app/core/models/Ticket';
+import { ChatMessage, Ticket, MessageDto } from 'src/app/core/models';
 
 @Component({
   selector: 'app-chat',
@@ -27,20 +26,19 @@ export class ChatComponent implements OnInit, AfterViewChecked {
   constructor(private readonly socketService: SocketService) {}
 
   ngOnInit(): void {
-    this.socketService.messages$.subscribe((msg: any) => {
+    this.socketService.messages$.subscribe((msg: MessageDto) => {
       this.updateWsMessages(msg);
       this.updateAgentTickets(msg);
     });
   }
 
-  updateWsMessages(msg:any){
+  updateWsMessages(msg: MessageDto){
     if (this.sender === 'client' && this.selectedTicket && msg.titleDto.startsWith(this.selectedTicket.title)) {
       this.messages.push({
         sender: msg.usernameDto,
         content: msg.contentDto,
         createdAt: msg.createdAt,
         role: msg.userRoleDto,
-        ticketId: msg.ticketId,
         title: msg.titleDto
       });
     }
@@ -51,13 +49,12 @@ export class ChatComponent implements OnInit, AfterViewChecked {
         content: msg.contentDto,
         createdAt: msg.createdAt,
         role: msg.userRoleDto,
-        ticketId: msg.ticketId,
         title: msg.titleDto
       });
     }
   }
 
-  updateAgentTickets(msg: any) {
+  updateAgentTickets(msg: MessageDto) {
     if (this.sender === 'agent' && msg.titleDto?.startsWith('Chat:')) {
       const nowIso = new Date().toISOString();
       const lastAt = msg.createdAt || nowIso;
@@ -114,9 +111,9 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           content: msg.content,
           createdAt: msg.createdAt,
           role: msg.user_role,
-          ticketId: msg.ticket_id,
           title: msg.title
-        }));
+        }))
+        .sort((a, b) => new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime());
     });
 
     this.selectedTicket = { id: Date.now(), title: `Chat:${username}` };
@@ -158,32 +155,32 @@ export class ChatComponent implements OnInit, AfterViewChecked {
           content: msg.content,
           createdAt: msg.createdAt,
           role: msg.user_role,
-          ticketId: msg.ticket_id,
           title: msg.title
-        }));
+        }))
+        .sort((a, b) => new Date(a.createdAt || 0).getTime() - new Date(b.createdAt || 0).getTime());
     });
   }
 
   sendMessage() {
-    if (this.newMessage.trim()) {
-      let title = '';
+  if (this.newMessage.trim()) {
+    let title = '';
 
-      if (this.sender === 'client') {
-        title = `Chat:${this.userName}`;
-      } else if (this.sender === 'agent' && this.selectedTicket) {
-        title = this.selectedTicket.title;
-      }
-
-      this.socketService.sendMessage(
-        this.userName,
-        this.newMessage,
-        this.sender.toUpperCase(),
-        title
-      );
-
-      this.newMessage = '';
+    if (this.sender === 'client') {
+      title = `Chat:${this.userName}`;
+    } else if (this.sender === 'agent' && this.selectedTicket) {
+      title = this.selectedTicket.title;
     }
+
+    this.socketService.sendMessage(
+      this.userName,
+      this.newMessage,
+      this.sender.toUpperCase(),
+      title
+    );
+
+    this.newMessage = '';
   }
+}
 
   private scrollToBottom(): void {
     if (this.messagesContainer) {

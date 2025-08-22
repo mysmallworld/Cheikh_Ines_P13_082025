@@ -3,6 +3,7 @@ import { Client, IMessage } from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import { Subject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { MessageDto, Messages } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
 export class SocketService {
 
   private readonly stompClient: Client;
-  private readonly messageSubject = new Subject<any>();
+  private readonly messageSubject = new Subject<MessageDto>();
 
   messages$ = this.messageSubject.asObservable();
   private readonly apiUrl = 'http://localhost:3001/api/chat';
@@ -44,7 +45,7 @@ export class SocketService {
     this.stompClient.publish({ destination: '/app/sendMessage', body: JSON.stringify(chatMessage) });
   }
 
-  getHistory(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/messages`);
+  getHistory(): Observable<Messages[]> {
+    return this.http.get<Messages[]>(`${this.apiUrl}/messages`);
   }
 }

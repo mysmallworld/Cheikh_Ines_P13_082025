@@ -32,12 +32,12 @@
 <div *ngIf="roleChosen && userValidated && (sender === 'client' || selectedTicket)" class="chat-container">
   <div class="role-banner d-flex align-items-center">
     <div class="flex-grow-1 text-center">
+      <span>Support client</span><br>
       <span *ngIf="sender === 'client'">
         Connecté en tant que <strong>{{ userName }}</strong> (client)
       </span>
       <span *ngIf="sender === 'agent' && selectedTicket">
         Connecté en tant que <strong>{{ userName }}</strong> (agent)
-        - Conversation avec <strong>{{ selectedTicket.title.replace('Chat:', '') }}</strong>
       </span>
     </div>
 
