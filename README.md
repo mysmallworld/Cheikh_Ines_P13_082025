@@ -112,6 +112,8 @@ You need to add environement variables into poc-backend/src/main/resources/appli
 
 **DBUSERNAME**: username of your database.  
 
+You will found the SQL script file in this folder ressources/script.sql
+
 ## Development server poc-backend
 The development server runs at: `http://localhost:3001/`.  
 Reload the application if you make any changes to the source files.
