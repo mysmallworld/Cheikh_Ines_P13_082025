@@ -104,8 +104,8 @@ mysql -u root
 ```
 
 ```bash
-CREATE DATABASE IF NOT EXISTS your_car_your_way;
-    USE your_car_your_way;
+CREATE DATABASE IF NOT EXISTS poc_your_car_your_way;
+    USE poc_your_car_your_way;
 ```
 
 You need to add environement variables into poc-backend/src/main/resources/application.proporties :  
