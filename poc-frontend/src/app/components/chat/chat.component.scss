@@ -19,8 +19,8 @@
 
 .close-btn {
   background: #DC8F8F3C;
-  font-size: 0.8rem;
-  padding: 0.2rem 0.5rem;
+  font-size: 13px;
+  padding: 3px 8px;
 }
 
 .close-btn:hover {
@@ -37,7 +37,7 @@
 .message-client,
 .message-agent {
   display: flex;
-  margin: 5px 0;
+  margin: 12px 0;
 }
 
 .message-client {
@@ -49,7 +49,7 @@
 }
 
 .bubble {
-  max-width: 70%;   
+  max-width: 70%;
   padding: 10px;
   border-radius: 10px;
   word-wrap: break-word;
@@ -74,7 +74,7 @@
 }
 
 .sender {
-  font-size: 0.8rem;
+  font-size: 13px;
   font-weight: bold;
   display: block;
   margin-bottom: 4px;

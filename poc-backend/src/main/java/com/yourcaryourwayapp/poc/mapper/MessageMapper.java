@@ -1,7 +1,6 @@
 package com.yourcaryourwayapp.poc.mapper;
 
 import com.yourcaryourwayapp.poc.dto.MessageDto;
-import com.yourcaryourwayapp.poc.dto.UserRole;
 import com.yourcaryourwayapp.poc.dto.WsChatMessageType;
 import com.yourcaryourwayapp.poc.model.Message;
 import org.springframework.stereotype.Component;
