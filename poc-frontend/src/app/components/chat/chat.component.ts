@@ -190,4 +190,13 @@ export class ChatComponent implements OnInit, AfterViewChecked {
       this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
     }
   }
+  resetChat() {
+    this.roleChosen = false;
+    this.userValidated = false;
+    this.sender = '';
+    this.userName = '';
+    this.selectedTicket = null;
+    this.messages = [];
+    this.tickets = [];
+  }
 }
