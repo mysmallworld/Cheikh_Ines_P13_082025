@@ -95,19 +95,25 @@ Follow these steps to install the backend:
    mvn spring-boot:run
    ```
 
-## **Configuration of Database**
+## **Configuration of Database and environement variables**
 Before starting the application, you must create the poc database in MySQL.   
 You can do this with the following command in your MySQL terminal:  
 
 ```bash
 mysql -u root -p
 ```
-After you need to write your database password (here we use a root as username).
+Enter your password (here we use a root as username).
 
 ```bash
 CREATE DATABASE IF NOT EXISTS poc_your_car_your_way;
     USE poc_your_car_your_way;
 ```
+
+You need to add environement variables into estate/src/main/resources/application.proporties :
+
+DBURL: url of your database.
+DBUSERNAME: username of your database.
+DBPASSWORD: password of your database.
 
 You will found the SQL script file in this folder **ressources/script.sql**
 
