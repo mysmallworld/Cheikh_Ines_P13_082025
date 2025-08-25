@@ -100,8 +100,9 @@ Before starting the application, you must create the poc database in MySQL.
 You can do this with the following command in your MySQL terminal:  
 
 ```bash
-mysql -u root
+mysql -u root -p
 ```
+After you need to write your database password (here we use a root as username).
 
 ```bash
 CREATE DATABASE IF NOT EXISTS poc_your_car_your_way;
